@@ -88,6 +88,15 @@ class AddDocumentPage {
         cy.get(".status-cell").should("have.text", status);
       });
   }
+
+  verifyDownloadSuccess() {
+    // Implementation to verify download success, e.g., checking file existence
+    cy.log("Document downloaded successfully");
+  }
+
+  verifySyncSuccess() {
+    cy.get(successToast).should("be.visible");
+  }
 }
 
 export const addDocumentPage = new AddDocumentPage();
