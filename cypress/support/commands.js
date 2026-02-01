@@ -23,3 +23,41 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/*Cypress.Commands.add("login", () => {
+  cy.visit("/");
+
+  cy.get('input[data-slot="input"]').type("qa@coreloops.ai");
+
+  // 2FA workaround assumption: session already trusted
+  cy.contains("Dashboard", { timeout: 20000 }).should("be.visible");
+}); */
+
+/*Cypress.Commands.add("login", () => {
+  cy.visit("/");
+  cy.get('input[data-slot="input"]').type("qa@coreloops.ai");
+  cy.get('button[data-slot="button"]').should("be.visible").click();
+  // Manual OTP entry here once
+  cy.wait(2000);
+  cy.get('button[data-slot="button"]').should("be.visible").click();
+  cy.get("#radix-_r_7_ > div > span").contains("Dashboard");
+});*/
+
+Cypress.Commands.add("createProject", (projectName) => {
+  cy.get("button").contains("+").click();
+  cy.get("input").first().type(projectName);
+  cy.contains("Save").click();
+  cy.contains(projectName).should("exist");
+});
+
+Cypress.Commands.add("login", () => {
+  cy.session("coreloops-session", () => {
+    cy.visit("/");
+    cy.get('input[data-slot="input"]').type("qa@coreloops.ai");
+    cy.get('button[data-slot="button"]').should("be.visible").click();
+    // Manual OTP entry here once
+    cy.wait(20000);
+    cy.get('button[data-slot="button"]').should("be.visible").click();
+    cy.get("#radix-_r_7_ > div > span").contains("Dashboard");
+  });
+});
