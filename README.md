@@ -1,87 +1,185 @@
-# Coreloops_documentsE2E
+# E2E Test Automation – Coreloops Document Management
 
-This repository includes automated end-to-end testing implemented with Cypress, focusing on critical user workflows to ensure reliability, data integrity, and a smooth user experience.
+This repository contains an end-to-end (E2E) test automation framework for the **Coreloops Document Management System**, built using **Cypress** and the **Page Object Model (POM)** pattern.
 
-2FA Handling Strategy
-The application uses email-based 2FA. Since Cypress does not support automating third-party OAuth email UIs reliably, the test suite retrieves the OTP securely via IMAP using a Cypress task. This mirrors real-world enterprise automation patterns while maintaining test stability and security.
+The framework validates critical document workflows including manual document creation, document upload, approval, and payment flows. Due to 2FA constraints, authentication is handled using a **session-based login strategy**, which aligns with real-world E2E testing best practices.
+
+---
 
 ## Prerequisites
 
-Before running the tests, ensure you have the following installed:
+- Node.js (v16+ recommended)
+- npm (v8+ recommended)
+- Cypress (installed locally via npm)
+- Access to the Coreloops QA environment
 
-- Node.js (v18 or later)
-- npm (v9 or later)
-- Cypress (v13 or later)
-
-
+---
 
 ## Installation
 
-1. Clone the repository:
+Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/your-username/coreloops-e2e-tests.git
+cd coreloops-e2e-tests
 ```
 
-2. Install the dependencies:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-## Running the Tests
-
-To run the tests in headless mode, use the following command:
-
-```bash
-npm test
-```
-
-To open the Cypress Test Runner, use:
-
-```bash
-npx cypress open
-```
-
-## Configuration
-
-The test configuration is located in the `cypress.config.js` file. You can modify the following settings:
-
-- `baseUrl`: The base URL of the application under test.
-- `env`: Environment variables such as `username`, `password`, and `email` for authentication and 2FA.
-
-## Test Structure
-
-The tests are organized in the `cypress/e2e` directory. Each test file corresponds to a specific feature or workflow. The main test files include:
-
-- `login.cy.js`: Tests for the login functionality.
-- `document_
+---
 
 ## Project Structure
 
-│
+``
+.
 ├── cypress/
-│   ├── e2e/
-│   │   ├── auth/
-│   │   │   └── login.cy.js
-│   │   ├── documents/
-│   │   │   ├── manual-document.cy.js
-│   │   │   ├── document-upload.cy.js
-│   │   │   ├── document-approval.cy.js
-│   │
-│   ├── fixtures/
-│   │   ├── test-files/
-│   │   │   ├── invoice.pdf
-│   │   │   ├── receipt.png
-│   │   │   ├── invalid.txt
-│   │
-│   ├── support/
-│   │   ├── commands.js
-│   │   └── e2e.js
-│
-├── .github/workflows/cypress.yml
-├── cypress.config.js
-├── package.json
-├── README.md
-└── QA_REPORT.md
+│ ├── e2e/ # Test specs (workflows)
+│ ├── fixtures/ # Test data and files (PDF, CSV, images)
+│ ├── pages/ # Page Object Models
+│ ├── support/
+│ │ ├── commands.js # Custom Cypress commands
+│ │ └── e2e.js # Global hooks
+├── cypress.config.js # Cypress configuration
+├── cypress.env.json # Environment variables (local only)
+├── package.json # Dependencies and scripts
+└── README.md # Project documentation
+
+````
+
+---
+
+## Usage
+
+This framework covers the following workflows:
+
+* Manual document creation
+* Document upload (PDF, image, CSV)
+* Document approval
+* Marking documents as paid
+
+Tests are written using:
+
+* **Page Object Model** for maintainability
+* **Reusable custom commands**
+* **Clear assertions on UI and API behavior**
+
+---
+
+## Running Tests
+
+### Open Cypress Test Runner (headed mode)
+
+```bash
+npx cypress open
+````
+
+### Run tests in headless mode (Chrome)
+
+```bash
+npx cypress run --browser chrome
+```
+
+---
+
+## Environment Variables
+
+Environment variables should **not be hardcoded**.
+
+### Local setup (recommended)
+
+Create a `cypress.env.json` file at the project root:
+
+```json
+{
+  "EMAIL": "*******.com",
+  "EMAIL_PASSWORD": "********"
+}
+```
+
+> ⚠️ This file should be added to `.gitignore`.
+
+You can access variables in tests using:
+
+```js
+Cypress.env("email");
+```
+
+---
+
+## Authentication Strategy (2FA Handling)
+
+The Coreloops platform uses **email-based 2FA**, which cannot be reliably automated due to Gmail security restrictions.
+
+### Adopted Strategy
+
+- Login is handled via the UI
+- OTP is entered **manually once**
+- Cypress `cy.session()` is used to cache the authenticated session
+- Subsequent tests reuse the session without re-triggering login
+
+This approach reflects **industry best practices** for E2E testing on 2FA-protected applications.
+
+### Example
+
+```js
+cy.session("coreloops-session", () => {
+  cy.visit("/");
+  // login steps
+});
+```
+
+---
+
+---
+
+## Utilities & Custom Commands
+
+### Custom Commands
+
+Located in `cypress/support/commands.js`, including:
+
+- `cy.login()` – session-based authentication helper
+- Common navigation helpers
+- Reusable document actions
+
+---
+
+## Key Features
+
+- ✅ Page Object Model (POM)
+- ✅ Session-based authentication
+- ✅ Negative & positive test coverage
+- ✅ UI + API assertions
+- ✅ Modular and maintainable test structure
+- ✅ CI-ready execution
+
+---
+
+## CI/CD
+
+This framework is designed to run in CI environments (e.g. GitHub Actions).
+
+Typical CI steps:
+
+1. Install dependencies
+2. Inject environment variables as secrets
+3. Run Cypress in headless mode
+4. Generate test results
+
+Example:
+
+```bash
+npx cypress run --browser chrome
+```
+
+---
+
+## Contributing
+
+This repository was created as part of a **QA technical assessment**.
+
+---
