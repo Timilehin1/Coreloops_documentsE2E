@@ -2,7 +2,6 @@ const emailField = 'input[data-slot="input"]';
 const loginBtn = 'button[data-slot="button"]';
 const codeField = 'input[data-slot="input"]';
 const invalidEmailErrorMsg = ".grid > .font-semibold";
-//cy.get('.grid > .font-semibold')
 
 class LoginPage {
   inputEmailAddress(email) {

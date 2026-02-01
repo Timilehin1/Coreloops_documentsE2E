@@ -13,7 +13,7 @@ describe("Setup a project", () => {
   });
 
   it("verify user can create a project", () => {
-    cy.get(".flex-row.gap-6 > .inline-flex").click();
+
     addProjectPage.clickAddProjectIcon();
     cy.pause();
     addProjectPage.enterProjectName(projectName);
@@ -36,3 +36,4 @@ describe("Setup a project", () => {
 //Create a project
 //edit a project
 //delete a project
+
