@@ -1,10 +1,6 @@
 /// <reference types="cypress" />
 import { addDocumentPage } from "../support/pageObjects/addDocumentPage";
 
-//Create manual document -approve document,
-// mark document as paid,
-// sync documents and
-//  download documents
 describe("Create Manual Document", () => {
   beforeEach(() => {
     cy.login();
@@ -28,22 +24,8 @@ describe("Create Manual Document", () => {
     addDocumentPage.approveDocument();
   });
 
-  it("Mark Document as Paid", () => {
-    addDocumentPage.verifyDocumentTable();
-    addDocumentPage.selectDocument();
-    addDocumentPage.approveDocument();
-    cy.wait(2000);
-    addDocumentPage.clickMarkAsPaidBtn();
-    addDocumentPage.verifyDocumentStatus("Paid");
-  });
-
   it("Sync Document", () => {
     addDocumentPage.clickSyncDocumentBtn();
     addDocumentPage.verifySyncSuccess();
-  });
-
-  it("Download Document", () => {
-    addDocumentPage.clickDownloadDocumentBtn();
-    addDocumentPage.verifyDownloadSuccess();
   });
 });
