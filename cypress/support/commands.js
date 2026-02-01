@@ -53,7 +53,7 @@ Cypress.Commands.add("createProject", (projectName) => {
 Cypress.Commands.add("login", () => {
   cy.session("coreloops-session", () => {
     cy.visit("/");
-    cy.get('input[data-slot="input"]').type("qa@coreloops.ai");
+    cy.get('input[data-slot="input"]').type(Cypress.env("EMAIL"));
     cy.get('button[data-slot="button"]').should("be.visible").click();
     // Manual OTP entry here once
     cy.wait(20000);
