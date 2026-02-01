@@ -1,6 +1,3 @@
-//login with invalid email
-//login with wrong otp
-//login with valid email
 ///<reference types="cypress"/>
 import { loginPage } from "../support/pageObjects/loginPage";
 import { dashboardPage } from "../support/pageObjects/dashboardPage";
@@ -24,7 +21,7 @@ describe("Authentication Tests", () => {
     loginPage.invalidEmailError();
   });
 
-  it.skip("Verify user is unable to login with valid credentials", () => {
+  it.only("Verify user is unable to login with valid credentials", () => {
     loginPage.inputEmailAddress(Cypress.env("email"));
     loginPage.clickLogin();
     cy.wait(20000); // Wait for manual OTP entry
