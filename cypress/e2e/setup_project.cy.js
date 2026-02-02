@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 
 import { addProjectPage } from "../support/pageObjects/addProjectPage";
-import { dashboardPage } from "../support/pageObjects/dashboardPage";
 
 let random = Math.floor(Math.random() * 1000000);
 const projectName = "TimiAutomation" + random;
@@ -13,27 +12,27 @@ describe("Setup a project", () => {
   });
 
   it("verify user can create a project", () => {
-
     addProjectPage.clickAddProjectIcon();
-    cy.pause();
     addProjectPage.enterProjectName(projectName);
     addProjectPage.enterProjectRefNumber(random);
     addProjectPage.clickSaveProjectBtn();
     addProjectPage.verifyProjectCreated(projectName);
   });
 
-  /* it("Create a project", () => {
-    addProjectPage.clickAddProjectIcon();
-    cy.pause();
-    addProjectPage.enterProjectName(projectName);
-    addProjectPage.enterProjectRefNumber(random);
-    cy.pause();
+  it("verify user can edit a project", () => {
+    addProjectPage.clickProjectOptions(projectName);
+    addProjectPage.clickEditProject();
+    const updatedProjectName = projectName + "_Updated";
+    addProjectPage.enterProjectName(updatedProjectName);
     addProjectPage.clickSaveProjectBtn();
-    addProjectPage.verifyProjectCreated();
-  })*/
+    addProjectPage.verifyProjectCreated(updatedProjectName);
+  });
+
+  it("verify user can delete a project", () => {
+    const updatedProjectName = projectName + "_Updated";
+    addProjectPage.clickProjectOptions(updatedProjectName);
+    addProjectPage.clickDeleteProject();
+    addProjectPage.confirmDeleteProject();
+    addProjectPage.verifyProjectDeleted(updatedProjectName);
+  });
 });
-
-//Create a project
-//edit a project
-//delete a project
-
