@@ -8,6 +8,8 @@ describe("Download Document", () => {
   });
 
   it("Download Document", () => {
+    addDocumentPage.verifyDocumentTable();
+    addDocumentPage.selectDocument();
     addDocumentPage.clickDownloadDocumentBtn();
     addDocumentPage.verifyDownloadSuccess();
   });
