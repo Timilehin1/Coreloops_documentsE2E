@@ -92,6 +92,7 @@ class AddDocumentPage {
   verifyDownloadSuccess() {
     // Implementation to verify download success, e.g., checking file existence
     cy.log("Document downloaded successfully");
+    cy.readFile("cypress/downloads/your-document.pdf").should("exist");
   }
 
   verifySyncSuccess() {
