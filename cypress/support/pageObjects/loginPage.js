@@ -1,5 +1,6 @@
 const emailField = 'input[data-slot="input"]';
 const loginBtn = 'button[data-slot="button"]';
+const SecurecodeLoginBtn = ".gap-2";
 const codeField = 'input[data-slot="input"]';
 const invalidEmailErrorMsg = ".grid > .font-semibold";
 
@@ -12,6 +13,9 @@ class LoginPage {
   }
   enterSecureCode(code) {
     cy.get(codeField).should("be.visible").type(code);
+  }
+  clickSecureCodeLogin() {
+    cy.get(".gap-2").should("be.visible").click();
   }
 
   invalidEmailError() {

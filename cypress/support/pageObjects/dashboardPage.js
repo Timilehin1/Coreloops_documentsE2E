@@ -1,4 +1,4 @@
-const dashboardDrpdwn = "#radix-_r_7_";
+const dashboardDrpdwn = "#radix-_r_7_ > .flex";
 
 class DashboardPage {
   getDashboardDrpdwn() {

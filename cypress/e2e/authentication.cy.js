@@ -21,11 +21,11 @@ describe("Authentication Tests", () => {
     loginPage.invalidEmailError();
   });
 
-  it.only("Verify user is able to login with valid credentials", () => {
+  it("Verify user is able to login with valid credentials", () => {
     loginPage.inputEmailAddress(Cypress.env("email"));
     loginPage.clickLogin();
-    cy.wait(40000); // Wait for manual OTP entry
-    loginPage.clickLogin();
+    cy.wait(2000);
+    loginPage.clickSecureCodeLogin();
     dashboardPage.getDashboardDrpdwn();
   });
 });
