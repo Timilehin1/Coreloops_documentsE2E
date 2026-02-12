@@ -10,9 +10,8 @@ Cypress.Commands.add("login", () => {
     cy.visit("/");
     cy.get('input[data-slot="input"]').type(Cypress.env("email"));
     cy.get('button[data-slot="button"]').click();
-    // Manual OTP ONCE
-    cy.wait(40000);
-    cy.get('button[data-slot="button"]').click();
+    cy.wait(2000);
+    cy.get(".gap-2").should("be.visible").click();
     cy.get("#radix-_r_7_").contains("Dashboard");
   });
 });

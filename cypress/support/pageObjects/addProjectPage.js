@@ -3,10 +3,14 @@ const projectNameField = '[name="name"]';
 const projectRefField = '[name="number"]';
 const saveProjectBtn = ".justify-end > .bg-primary";
 const successToast = ".toast-message";
+const editProjectBtn = ".edit-project-option";
+const deleteProjectBtn = ".delete-project-option";
+const confirmDeleteBtn = ".confirm-delete-button";
+const projectOptionsBtn = ".options-button";
 
 class AddProjectPage {
   clickAddProjectIcon() {
-    cy.get(addProjectBtn).click();
+    cy.get(addProjectBtn).should("be.visible").click();
   }
 
   enterProjectName(name) {
@@ -30,20 +34,20 @@ class AddProjectPage {
     cy.contains(projectName)
       .parent()
       .within(() => {
-        cy.get(".options-button").click();
+        cy.get(projectOptionsBtns).click();
       });
   }
 
   clickEditProject() {
-    cy.get(".edit-project-option").click();
+    cy.get(editProjectBtn).click();
   }
 
   clickDeleteProject() {
-    cy.get(".delete-project-option").click();
+    cy.get(deleteProjectBtn).click();
   }
 
   confirmDeleteProject() {
-    cy.get(".confirm-delete-button").click();
+    cy.get(confirmDeleteBtn).click();
     cy.get(successToast).should("be.visible");
   }
   verifyProjectDeleted(updatedProjectName) {
